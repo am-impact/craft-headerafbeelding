@@ -1,0 +1,21 @@
+{% cache for 1 day %}
+
+{% if entry is defined %}
+    {% for header in headerafbeelding.headerafbeelding %}
+        {% for pagina in header.paginas %}
+            {# Pakt ook alle subsegmenten, anders == gebruiken #}
+            {% if entry.uri starts with pagina.uri %}
+                {% for image in header.afbeelding %}
+                    <img src="{{ image.getUrl({
+                        width: 1200,
+                        height: 260,
+                        mode: 'crop',
+                        position: 'center-center'
+                    }) }}">
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+{% endcache %}
