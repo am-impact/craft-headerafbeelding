@@ -1,10 +1,12 @@
 {% cache for 1 day %}
 
 {% if entry is defined %}
+    {% set headerItemMatched = 'false' %}
+
     {% for header in headerafbeelding.headerafbeelding %}
         {% for pagina in header.paginas %}
             {# Pakt ook alle subsegmenten, anders == gebruiken #}
-            {% if entry.uri starts with pagina.uri %}
+            {% if (entry.uri starts with pagina.uri or pagina.uri == '__home__') and headerItemMatched == 'false' %}
                 {% for image in header.afbeelding %}
                     <img src="{{ image.getUrl({
                         width: 1200,
@@ -13,6 +15,7 @@
                         position: 'center-center'
                     }) }}">
                 {% endfor %}
+                {% set headerItemMatched = 'true' %}
             {% endif %}
         {% endfor %}
     {% endfor %}
