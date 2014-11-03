@@ -1,11 +1,14 @@
 {% cache for 1 day %}
 
+{% if submap is not defined %}
+    {% set submap = craft.config.environmentVariables['submap'] %}
+{% endif %}
+
 {% if entry is defined %}
     {% set headerItemMatched = 'false' %}
 
     {% for header in headerafbeelding.headerafbeelding if headerItemMatched == 'false' %}
         {% for pagina in header.paginas if headerItemMatched == 'false' %}
-            {# Pakt ook alle subsegmenten, anders == gebruiken #}
             {% if (entry.uri starts with pagina.uri or pagina.uri == '__home__') %}
                 {% for image in header.afbeelding %}
                     <img src="{{ image.getUrl({
@@ -19,6 +22,8 @@
             {% endif %}
         {% endfor %}
     {% endfor %}
+{% else %}
+    <img src="{{ submap ~ 'resources/img/blank.gif' }}" data-small="{{ submap }}resources/img/header-fallback-small.jpg" data-large="{{ submap }}/resources/img/header-fallback.jpg" >
 {% endif %}
 
 {% endcache %}
