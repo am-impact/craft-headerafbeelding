@@ -9,7 +9,7 @@
 
     {% for header in headerafbeelding.headerafbeelding if headerItemMatched == 'false' %}
         {% for pagina in header.paginas if headerItemMatched == 'false' %}
-            {% if (entry.uri starts with pagina.uri or pagina.uri == '__home__') %}
+            {% if (entry.uri starts with pagina.uri or (pagina.uri == '__home__' and entry.uri == '__home__' )) %}
                 {% for image in header.afbeelding %}
                     <img src="{{ image.getUrl({
                         width: 1200,
